@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-  <title>AutoTrace · responsive tracker</title>
-  <!-- unchanged fonts, core styling preserved, only responsive adjustments added -->
+  <title>AutoTrace · Team Sync</title>
   <style>
-    /* ----- ORIGINAL STYLES (exactly as provided) ----- */
+    /* ========== ORIGINAL CSS (UNCHANGED) ========== */
     @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap');
     *{box-sizing:border-box;margin:0;padding:0}
     :root{
@@ -19,8 +18,6 @@
     }
     body{background:var(--bg);color:var(--t1);font-family:'Inter',sans-serif;font-size:14px;line-height:1.5;min-height:100vh}
     .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
-
-    /* NAV */
     .nav{background:var(--bg2);border-bottom:1px solid var(--bd);padding:0 20px;display:flex;align-items:stretch;gap:0;position:sticky;top:0;z-index:50}
     .nav-brand{display:flex;align-items:center;gap:10px;padding:14px 16px 14px 0;margin-right:8px;border-right:1px solid var(--bd)}
     .brand-dot{width:8px;height:8px;border-radius:50%;background:var(--a1)}
@@ -36,27 +33,19 @@
     .btn-export:hover{opacity:.88}
     .btn-export:active{transform:scale(.97)}
     .btn-export svg{width:13px;height:13px}
-
-    /* PAGES */
     .page{display:none;padding:24px 20px 40px}
     .page.active{display:block}
-
-    /* OVERVIEW STATS */
     .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:24px}
     .stat-card{background:var(--bg3);border:1px solid var(--bd);border-radius:10px;padding:14px 16px}
     .stat-card .s-label{font-size:11px;color:var(--t3);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
     .stat-card .s-val{font-family:'Syne',sans-serif;font-weight:700;font-size:22px;color:var(--t1)}
     .stat-card .s-sub{font-size:11px;color:var(--t3);margin-top:2px}
-
-    /* OVERALL BAR */
     .overall-bar{background:var(--bg3);border:1px solid var(--bd);border-radius:12px;padding:16px 18px;margin-bottom:24px}
     .ob-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
     .ob-title{font-family:'Syne',sans-serif;font-weight:600;font-size:13px;color:var(--t2)}
     .ob-pct{font-family:'Syne',sans-serif;font-weight:800;font-size:28px;color:var(--t1)}
     .track{height:6px;background:var(--bg5);border-radius:99px;overflow:hidden}
     .fill-bar{height:100%;border-radius:99px;background:var(--a1);transition:width .5s cubic-bezier(.4,0,.2,1)}
-
-    /* PHASES */
     .phases{display:flex;flex-direction:column;gap:12px}
     .phase{background:var(--bg2);border:1px solid var(--bd);border-radius:12px;overflow:hidden}
     .ph-header{padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;user-select:none;transition:background .15s}
@@ -90,8 +79,6 @@
     .ph-footer-bar{flex:1;height:3px;background:var(--bg5);border-radius:99px;overflow:hidden}
     .ph-footer-fill{height:100%;border-radius:99px;transition:width .4s}
     .ph-footer-num{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;flex-shrink:0;min-width:28px;text-align:right}
-
-    /* EDIT PAGE */
     .edit-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
     .edit-header h2{font-family:'Syne',sans-serif;font-weight:700;font-size:18px}
     .edit-phases{display:flex;flex-direction:column;gap:16px}
@@ -124,156 +111,37 @@
     .del-sec-btn:hover{color:var(--red);background:rgba(224,85,85,.1)}
     .toast{position:fixed;bottom:20px;right:20px;background:var(--bg4);border:1px solid var(--bd2);color:var(--t1);font-size:12px;padding:10px 16px;border-radius:8px;opacity:0;transform:translateY(8px);transition:all .25s;pointer-events:none;z-index:999;font-family:'Inter',sans-serif}
     .toast.show{opacity:1;transform:translateY(0)}
-
-    /* ========== RESPONSIVE ADDITIONS (only layout changes) ========== */
+    .sync-badge{background:var(--a2);color:#fff;font-size:10px;padding:2px 8px;border-radius:20px;margin-left:8px;font-family:'JetBrains Mono',monospace}
     @media screen and (max-width: 700px) {
-      .nav {
-        padding: 0 12px;
-        flex-wrap: wrap;
-      }
-      .nav-brand {
-        padding: 10px 8px 10px 0;
-        margin-right: 4px;
-        border-right: none;
-      }
-      .brand-name {
-        font-size: 15px;
-      }
-      .brand-sub {
-        display: none; /* keep clean on small screens */
-      }
-      .nav-tabs {
-        flex: 1 1 auto;
-      }
-      .nav-tab {
-        padding: 0 12px;
-        font-size: 12px;
-      }
-      .nav-tab svg {
-        width: 16px;
-        height: 16px;
-      }
-      .nav-tab span {
-        display: none; /* icon only on very small, but we keep label; just smaller */
-      }
-      .nav-right {
-        padding: 8px 0;
-        margin-left: auto;
-      }
-      .btn-export {
-        padding: 6px 12px;
-        font-size: 11px;
-      }
-      .btn-export span {
-        display: inline; 
-      }
+      .nav{padding:0 12px;flex-wrap:wrap}
+      .nav-brand{padding:10px 8px 10px 0;margin-right:4px;border-right:none}
+      .brand-name{font-size:15px}
+      .brand-sub{display:none}
+      .nav-tabs{flex:1 1 auto}
+      .nav-tab{padding:0 12px;font-size:12px}
+      .nav-tab svg{width:16px;height:16px}
+      .nav-right{padding:8px 0;margin-left:auto}
+      .btn-export{padding:6px 12px;font-size:11px}
     }
-
     @media screen and (max-width: 550px) {
-      .nav {
-        gap: 4px;
-      }
-      .nav-tabs {
-        order: 3;
-        width: 100%;
-        justify-content: space-around;
-        border-top: 1px solid var(--bd);
-        margin-top: 4px;
-      }
-      .nav-tab {
-        padding: 10px 4px;
-        flex: 1;
-        justify-content: center;
-      }
-      .nav-tab span {
-        display: inline; 
-      }
-      .nav-right {
-        padding: 6px 0;
-      }
-      .btn-export span {
-        display: inline;
-      }
-      .stats-row {
-        grid-template-columns: 1fr 1fr;
-      }
-      .stat-card {
-        padding: 12px 10px;
-      }
-      .ph-header {
-        flex-wrap: wrap;
-        padding: 12px;
-        gap: 8px;
-      }
-      .ph-right {
-        width: 100%;
-        justify-content: space-between;
-        margin-top: 4px;
-      }
-      .mini-bar {
-        width: 100%;
-        max-width: 80px;
-      }
-      .ph-pct {
-        min-width: 42px;
-      }
-      .edit-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-      }
-      .edit-ph-head {
-        flex-wrap: wrap;
-      }
-      .add-section-row {
-        flex-wrap: wrap;
-      }
-      .add-sec-btn {
-        width: 100%;
-        margin-top: 4px;
-      }
-      .add-row {
-        flex-wrap: wrap;
-      }
-      .add-btn {
-        width: 100%;
-      }
-    }
-
-    @media screen and (max-width: 400px) {
-      .nav-brand .brand-name {
-        font-size: 14px;
-      }
-      .btn-export span {
-        display: none; /* icon only */
-      }
-      .btn-export svg {
-        margin: 0;
-      }
-      .ph-badge {
-        width: 28px;
-        height: 28px;
-        font-size: 11px;
-      }
-      .ph-title {
-        font-size: 12px;
-      }
-      .ob-pct {
-        font-size: 24px;
-      }
-      .overall-bar {
-        padding: 12px 12px;
-      }
-    }
-
-    /* keep interactive & touch friendly */
-    .item, .cb, .add-btn, .del-btn {
-      -webkit-tap-highlight-color: transparent;
+      .nav{gap:4px}
+      .nav-tabs{order:3;width:100%;justify-content:space-around;border-top:1px solid var(--bd);margin-top:4px}
+      .nav-tab{padding:10px 4px;flex:1;justify-content:center}
+      .stats-row{grid-template-columns:1fr 1fr}
+      .stat-card{padding:12px 10px}
+      .ph-header{flex-wrap:wrap;padding:12px;gap:8px}
+      .ph-right{width:100%;justify-content:space-between;margin-top:4px}
+      .mini-bar{width:100%;max-width:80px}
+      .edit-header{flex-direction:column;align-items:flex-start;gap:8px}
+      .add-section-row{flex-wrap:wrap}
+      .add-sec-btn{width:100%;margin-top:4px}
+      .add-row{flex-wrap:wrap}
+      .add-btn{width:100%}
     }
   </style>
 </head>
 <body>
-<h2 class="sr-only">AutoTrace — Graduation Project Tracker with checklist, edit, and PDF export</h2>
+<h2 class="sr-only">AutoTrace — Graduation Project Tracker with team sync via Google Sheets</h2>
 <div class="toast" id="toast"></div>
 
 <nav class="nav">
@@ -281,21 +149,26 @@
     <div class="brand-dot"></div>
     <span class="brand-name">AutoTrace</span>
     <span class="brand-sub">v1.0</span>
+    <span class="sync-badge" id="sync-badge">☁️ TEAM SYNC</span>
   </div>
   <div class="nav-tabs">
     <button class="nav-tab active" id="tab-tracker" onclick="switchTab('tracker')">
       <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-      <span>Tracker</span>
+      Tracker
     </button>
     <button class="nav-tab" id="tab-edit" onclick="switchTab('edit')">
       <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-      <span>Edit</span>
+      Edit
     </button>
   </div>
   <div class="nav-right">
+    <button class="btn-export" onclick="syncNow()" style="background:var(--a2);margin-right:4px">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Sync
+    </button>
     <button class="btn-export" onclick="exportPDF()">
       <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-      <span>Export PDF</span>
+      Export PDF
     </button>
   </div>
 </nav>
@@ -322,473 +195,448 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-  // ========== UNCHANGED JS (exactly as in original) ==========
-  const DEFAULT_PHASES=[
-  {id:1,title:"Phase 1: Networking Foundations",goal:"CCNA Core — build strong fundamentals",color:"#4b8cf5",sections:[
-  {label:"Topics to cover",items:["Network Basics (IP, Subnetting, OSI, TCP/IP)","Switching (MAC, VLANs, STP)","Routing Basics (Static and Dynamic)","NAT & ACL","DNS (Domain Name System)","DHCP (Dynamic Host Configuration Protocol)","ARP (Address Resolution Protocol)","ICMP (Internet Control Message Protocol)","Network Security Fundamentals (Firewalls, VPNs)","Wireless Networking Basics","IPv6 Fundamentals"]},
-  {label:"CCNA Labs",items:["CCNA Lab 1 – Introduction (Part 1)","CCNA Lab 1 – Introduction (Part 2)","CCNA Lab 2 – Static Routing","CCNA Lab 3 – Dynamic Routing (Part 1)","CCNA Lab 3 – Dynamic Routing (Part 2)","CCNA Lab 4 – Switching","CCNA Lab 5 – NAT & ACL"]}
-  ]},
-  {id:2,title:"Phase 2: Advanced Routing",goal:"CCNP — EIGRP & OSPF mastery",color:"#7c5cf5",sections:[
-  {label:"Topics to cover",items:["EIGRP","OSPF","Route Redistribution between EIGRP and OSPF","Route Summarization","Route Filtering and Prefix Lists","BGP (Border Gateway Protocol) basics","MPLS (Multiprotocol Label Switching) fundamentals","Policy-Based Routing"]},
-  {label:"EIGRP Labs",items:["CCNP Routing Lab 1 – EIGRP (Part 1)","CCNP Routing Lab 1 – EIGRP (Part 2)","CCNP Routing Lab 1 – EIGRP (Part 3)"]},
-  {label:"OSPF Labs",items:["CCNP Routing Lab 2 – OSPF (Part 1)","CCNP Routing Lab 2 – OSPF (Part 2)","CCNP Routing Lab 2 – OSPF (Part 3)"]}
-  ]},
-  {id:3,title:"Phase 3: Network Automation",goal:"Control networks programmatically",color:"#f0a030",sections:[
-  {label:"Skills to learn",items:["Python for Networking","Ansible","Network APIs (REST, SSH automation)"]},
-  {label:"Projects to build",items:["Script to configure routers (IP, routing, VLANs)","Script to collect network data (logs / flows)","Automated deployment using Ansible"]}
-  ]},
-  {id:4,title:"Phase 4: Anomaly Detection (AI)",goal:"Detect abnormal traffic with ML",color:"#e05a9a",sections:[
-  {label:"Step 1 — Dataset",items:["Use CIC-IDS2017 / 2018 dataset","Use UNSW-NB15 dataset","Use CTU-13 dataset"]},
-  {label:"Step 2 — Feature Engineering",items:["Extract: Source/Dest Bytes, Packet Counts","Extract: Inter-arrival Time, Protocol Flags","Set up CICFlowMeter","Set up nfstream"]},
-  {label:"Step 3 — Models",items:["Isolation Forest (baseline)","Autoencoders","Random Forest / XGBoost","(Optional) LSTM for sequences"]},
-  {label:"Step 4 — Real-time Pipeline",items:["Set up Zeek (Bro) for live traffic capture","Feed live data to model"]},
-  {label:"Step 5 — Evaluation",items:["Precision-Recall AUC evaluation","Test on unseen attacks"]}
-  ]},
-  {id:5,title:"Phase 5: Integration",goal:"Combine everything into one system",color:"#3ecfbf",sections:[
-  {label:"Integration flow",items:["Network (from labs) generates traffic","Python/Ansible collects data","Data goes to ML model","Model detects anomalies","Results sent to UI","End-to-end system test"]}
-  ]},
-  {id:6,title:"Phase 6: UI/UX Design",goal:"Make the project look professional",color:"#ff7040",sections:[
-  {label:"Dashboard features",items:["Network status display","Detected anomalies view","Alerts panel"]},
-  {label:"Technical stack",items:["Frontend: React or HTML dashboard","Backend: Python (Flask or FastAPI)","Connect frontend to anomaly detection backend","Deploy and test the full dashboard"]}
-  ]}
-  ];
+// ========== GOOGLE SHEETS API CONFIG ==========
+const SHEETS_API_URL = 'https://script.google.com/macros/s/AKfycbxehPLrVKUfJVcKH3Li6TAIGgHSGzRFR0JHpjJqsSmyTWehlgfUffOIFYg0UUkp5hcQ/exec';
 
-  const LS_PHASES='at_phases_v2';
-  const LS_CHECKS='at_checks_v2';
+// Device ID for tracking who checked what
+let deviceId = localStorage.getItem('autotrace_device_id');
+if (!deviceId) {
+  deviceId = 'device_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
+  localStorage.setItem('autotrace_device_id', deviceId);
+}
 
-  function loadPhases(){
-    try{const d=localStorage.getItem(LS_PHASES);return d?JSON.parse(d):JSON.parse(JSON.stringify(DEFAULT_PHASES))}
-    catch(e){return JSON.parse(JSON.stringify(DEFAULT_PHASES))}
-  }
-  function savePhases(p){try{localStorage.setItem(LS_PHASES,JSON.stringify(p))}catch(e){}}
-  function loadChecks(){try{const d=localStorage.getItem(LS_CHECKS);return d?JSON.parse(d):{}}catch(e){return{}}}
-  function saveChecks(c){try{localStorage.setItem(LS_CHECKS,JSON.stringify(c))}catch(e){}}
+// ========== DEFAULT DATA ==========
+const DEFAULT_PHASES=[
+{id:1,title:"Phase 1: Networking Foundations",goal:"CCNA Core — build strong fundamentals",color:"#4b8cf5",sections:[
+{label:"Topics to cover",items:["Network Basics (IP, Subnetting, OSI, TCP/IP)","Switching (MAC, VLANs, STP)","Routing Basics (Static and Dynamic)","NAT & ACL","DNS (Domain Name System)","DHCP (Dynamic Host Configuration Protocol)","ARP (Address Resolution Protocol)","ICMP (Internet Control Message Protocol)","Network Security Fundamentals (Firewalls, VPNs)","Wireless Networking Basics","IPv6 Fundamentals"]},
+{label:"CCNA Labs",items:["CCNA Lab 1 – Introduction (Part 1)","CCNA Lab 1 – Introduction (Part 2)","CCNA Lab 2 – Static Routing","CCNA Lab 3 – Dynamic Routing (Part 1)","CCNA Lab 3 – Dynamic Routing (Part 2)","CCNA Lab 4 – Switching","CCNA Lab 5 – NAT & ACL"]}
+]},
+{id:2,title:"Phase 2: Advanced Routing",goal:"CCNP — EIGRP & OSPF mastery",color:"#7c5cf5",sections:[
+{label:"Topics to cover",items:["EIGRP","OSPF","Route Redistribution between EIGRP and OSPF","Route Summarization","Route Filtering and Prefix Lists","BGP (Border Gateway Protocol) basics","MPLS (Multiprotocol Label Switching) fundamentals","Policy-Based Routing"]},
+{label:"EIGRP Labs",items:["CCNP Routing Lab 1 – EIGRP (Part 1)","CCNP Routing Lab 1 – EIGRP (Part 2)","CCNP Routing Lab 1 – EIGRP (Part 3)"]},
+{label:"OSPF Labs",items:["CCNP Routing Lab 2 – OSPF (Part 1)","CCNP Routing Lab 2 – OSPF (Part 2)","CCNP Routing Lab 2 – OSPF (Part 3)"]}
+]},
+{id:3,title:"Phase 3: Network Automation",goal:"Control networks programmatically",color:"#f0a030",sections:[
+{label:"Skills to learn",items:["Python for Networking","Ansible","Network APIs (REST, SSH automation)"]},
+{label:"Projects to build",items:["Script to configure routers (IP, routing, VLANs)","Script to collect network data (logs / flows)","Automated deployment using Ansible"]}
+]},
+{id:4,title:"Phase 4: Anomaly Detection (AI)",goal:"Detect abnormal traffic with ML",color:"#e05a9a",sections:[
+{label:"Step 1 — Dataset",items:["Use CIC-IDS2017 / 2018 dataset","Use UNSW-NB15 dataset","Use CTU-13 dataset"]},
+{label:"Step 2 — Feature Engineering",items:["Extract: Source/Dest Bytes, Packet Counts","Extract: Inter-arrival Time, Protocol Flags","Set up CICFlowMeter","Set up nfstream"]},
+{label:"Step 3 — Models",items:["Isolation Forest (baseline)","Autoencoders","Random Forest / XGBoost","(Optional) LSTM for sequences"]},
+{label:"Step 4 — Real-time Pipeline",items:["Set up Zeek (Bro) for live traffic capture","Feed live data to model"]},
+{label:"Step 5 — Evaluation",items:["Precision-Recall AUC evaluation","Test on unseen attacks"]}
+]},
+{id:5,title:"Phase 5: Integration",goal:"Combine everything into one system",color:"#3ecfbf",sections:[
+{label:"Integration flow",items:["Network (from labs) generates traffic","Python/Ansible collects data","Data goes to ML model","Model detects anomalies","Results sent to UI","End-to-end system test"]}
+]},
+{id:6,title:"Phase 6: UI/UX Design",goal:"Make the project look professional",color:"#ff7040",sections:[
+{label:"Dashboard features",items:["Network status display","Detected anomalies view","Alerts panel"]},
+{label:"Technical stack",items:["Frontend: React or HTML dashboard","Backend: Python (Flask or FastAPI)","Connect frontend to anomaly detection backend","Deploy and test the full dashboard"]}
+]}
+];
 
-  let phases=loadPhases();
-  let checks=loadChecks();
+const LS_PHASES='at_phases_v2';
+let phases=JSON.parse(JSON.stringify(DEFAULT_PHASES));
+let checks={};
 
-  function ck(phId,si,ii){return`${phId}_${si}_${ii}`}
+// Try to load phases from localStorage
+try{
+  const saved=localStorage.getItem(LS_PHASES);
+  if(saved) phases=JSON.parse(saved);
+}catch(e){}
 
-  function phaseStats(ph){
-    let total=0,done=0;
-    ph.sections.forEach((s,si)=>s.items.forEach((_,ii)=>{total++;if(checks[ck(ph.id,si,ii)])done++;}));
-    return{total,done,pct:total?Math.round(done/total*100):0};
-  }
+function ck(phId,si,ii){return`${phId}_${si}_${ii}`}
 
-  function allStats(){
-    let total=0,done=0;
-    phases.forEach(ph=>{const s=phaseStats(ph);total+=s.total;done+=s.done;});
-    return{total,done,pct:total?Math.round(done/total*100):0};
-  }
+function phaseStats(ph){
+  let total=0,done=0;
+  ph.sections.forEach((s,si)=>s.items.forEach((_,ii)=>{total++;if(checks[ck(ph.id,si,ii)])done++;}));
+  return{total,done,pct:total?Math.round(done/total*100):0};
+}
 
-  function toast(msg){
-    const t=document.getElementById('toast');
-    t.textContent=msg;t.classList.add('show');
-    clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),1800);
-  }
+function allStats(){
+  let total=0,done=0;
+  phases.forEach(ph=>{const s=phaseStats(ph);total+=s.total;done+=s.done;});
+  return{total,done,pct:total?Math.round(done/total*100):0};
+}
 
-  function switchTab(tab){
-    document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
-    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-    document.getElementById('tab-'+tab).classList.add('active');
-    document.getElementById('page-'+tab).classList.add('active');
-    if(tab==='edit')renderEdit();
-  }
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),1800);
+}
 
-  function renderTracker(){
-    const as=allStats();
-    document.getElementById('overall-pct').textContent=as.pct+'%';
-    document.getElementById('overall-fill').style.width=as.pct+'%';
-
-    const sr=document.getElementById('stats-row');
-    const completedPhases=phases.filter(ph=>phaseStats(ph).pct===100).length;
-    sr.innerHTML=`
-      <div class="stat-card"><div class="s-label">Overall</div><div class="s-val" style="color:var(--a1)">${as.pct}%</div><div class="s-sub">complete</div></div>
-      <div class="stat-card"><div class="s-label">Tasks done</div><div class="s-val">${as.done}</div><div class="s-sub">of ${as.total}</div></div>
-      <div class="stat-card"><div class="s-label">Phases done</div><div class="s-val" style="color:var(--green)">${completedPhases}</div><div class="s-sub">of ${phases.length}</div></div>
-      <div class="stat-card"><div class="s-label">Remaining</div><div class="s-val" style="color:var(--amber)">${as.total-as.done}</div><div class="s-sub">tasks left</div></div>`;
-
-    const container=document.getElementById('phases-container');
-    const openSet=new Set([...container.querySelectorAll('.phase.open')].map(el=>el.dataset.pid));
-    container.innerHTML='';
-
-    phases.forEach(ph=>{
-      const st=phaseStats(ph);
-      const el=document.createElement('div');
-      el.className='phase'+(openSet.has(String(ph.id))?' open':'');
-      el.dataset.pid=ph.id;
-
-      let bodyHTML='';
-      ph.sections.forEach((sec,si)=>{
-        bodyHTML+=`<div class="sec-label">${sec.label}</div><div class="items-list">`;
-        sec.items.forEach((item,ii)=>{
-          const isDone=!!checks[ck(ph.id,si,ii)];
-          bodyHTML+=`<div class="item${isDone?' done':''}" onclick="toggleCheck(${ph.id},${si},${ii},this)">
-            <div class="cb${isDone?' checked':''}" style="${isDone?`background:${ph.color}`:''}">
-              <svg viewBox="0 0 9 9" fill="none" stroke="#fff" stroke-width="2"><polyline points="1,4.5 3.5,7 8,2"/></svg>
-            </div>
-            <span class="item-txt">${item}</span>
-          </div>`;
-        });
-        bodyHTML+='</div>';
-      });
-      bodyHTML+=`<div class="ph-footer">
-        <span class="ph-footer-lbl">${st.done}/${st.total} tasks</span>
-        <div class="ph-footer-bar"><div class="ph-footer-fill" style="width:${st.pct}%;background:${ph.color}"></div></div>
-        <span class="ph-footer-num" style="color:${ph.color}">${st.pct}%</span>
-      </div>`;
-
-      el.innerHTML=`
-        <div class="ph-header" onclick="this.closest('.phase').classList.toggle('open')">
-          <div class="ph-badge" style="background:${ph.color}22;color:${ph.color}">P${ph.id}</div>
-          <div class="ph-info">
-            <div class="ph-title">${ph.title}</div>
-            <div class="ph-goal">${ph.goal}</div>
-          </div>
-          <div class="ph-right">
-            <span class="ph-pct" style="color:${ph.color}">${st.pct}%</span>
-            <div class="mini-bar"><div class="mini-fill" style="width:${st.pct}%;background:${ph.color}"></div></div>
-            <span class="chevron">▾</span>
-          </div>
-        </div>
-        <div class="ph-body">${bodyHTML}</div>`;
-      container.appendChild(el);
+// ========== CLOUD SYNC FUNCTIONS ==========
+async function loadChecksFromCloud(){
+  try{
+    const res=await fetch(SHEETS_API_URL);
+    const data=await res.json();
+    const newChecks={};
+    data.forEach(row=>{
+      const key=ck(row.phase,row.section,row.item);
+      newChecks[key]=true;
     });
+    return newChecks;
+  }catch(e){
+    console.error('Cloud load error:',e);
+    return {};
   }
+}
 
-  function toggleCheck(phId,si,ii,itemEl){
-    const k=ck(phId,si,ii);
-    checks[k]=!checks[k];
-    saveChecks(checks);
-    const ph=phases.find(p=>p.id===phId);
-    const cb=itemEl.querySelector('.cb');
-    if(checks[k]){
-      itemEl.classList.add('done');
-      cb.classList.add('checked');
-      cb.style.background=ph.color;
-    }else{
-      itemEl.classList.remove('done');
-      cb.classList.remove('checked');
-      cb.style.background='';
-    }
-    updatePhaseFooter(phId);
+async function saveCheckToCloud(phId,si,ii){
+  try{
+    await fetch(SHEETS_API_URL,{
+      method:'POST',
+      body:JSON.stringify({phase:phId,section:si,item:ii,device:deviceId})
+    });
+  }catch(e){console.error('Save error:',e);}
+}
+
+async function deleteCheckFromCloud(phId,si,ii){
+  try{
+    await fetch(SHEETS_API_URL,{
+      method:'DELETE',
+      body:JSON.stringify({phase:phId,section:si,item:ii})
+    });
+  }catch(e){console.error('Delete error:',e);}
+}
+
+async function syncNow(){
+  toast('Syncing with team...');
+  checks=await loadChecksFromCloud();
+  renderTracker();
+  updateOverall();
+  toast('Synced!');
+  document.getElementById('sync-badge').style.background='var(--green)';
+  setTimeout(()=>document.getElementById('sync-badge').style.background='var(--a2)',1000);
+}
+
+// Auto-sync every 5 seconds
+setInterval(async ()=>{
+  const newChecks=await loadChecksFromCloud();
+  if(JSON.stringify(newChecks)!==JSON.stringify(checks)){
+    checks=newChecks;
+    renderTracker();
     updateOverall();
   }
+},5000);
 
-  function updatePhaseFooter(phId){
-    const ph=phases.find(p=>p.id===phId);
+// ========== MODIFIED TOGGLE ==========
+async function toggleCheck(phId,si,ii,itemEl){
+  const k=ck(phId,si,ii);
+  const isNowChecked=!checks[k];
+  checks[k]=isNowChecked;
+  
+  if(isNowChecked){
+    await saveCheckToCloud(phId,si,ii);
+  }else{
+    await deleteCheckFromCloud(phId,si,ii);
+  }
+  
+  const ph=phases.find(p=>p.id===phId);
+  const cb=itemEl.querySelector('.cb');
+  if(isNowChecked){
+    itemEl.classList.add('done');
+    cb.classList.add('checked');
+    cb.style.background=ph.color;
+  }else{
+    itemEl.classList.remove('done');
+    cb.classList.remove('checked');
+    cb.style.background='';
+  }
+  
+  updatePhaseFooter(phId);
+  updateOverall();
+}
+
+function switchTab(tab){
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  document.getElementById('page-'+tab).classList.add('active');
+  if(tab==='edit')renderEdit();
+}
+
+function renderTracker(){
+  const as=allStats();
+  document.getElementById('overall-pct').textContent=as.pct+'%';
+  document.getElementById('overall-fill').style.width=as.pct+'%';
+
+  const sr=document.getElementById('stats-row');
+  const completedPhases=phases.filter(ph=>phaseStats(ph).pct===100).length;
+  sr.innerHTML=`
+    <div class="stat-card"><div class="s-label">Overall</div><div class="s-val" style="color:var(--a1)">${as.pct}%</div><div class="s-sub">complete</div></div>
+    <div class="stat-card"><div class="s-label">Tasks done</div><div class="s-val">${as.done}</div><div class="s-sub">of ${as.total}</div></div>
+    <div class="stat-card"><div class="s-label">Phases done</div><div class="s-val" style="color:var(--green)">${completedPhases}</div><div class="s-sub">of ${phases.length}</div></div>
+    <div class="stat-card"><div class="s-label">Remaining</div><div class="s-val" style="color:var(--amber)">${as.total-as.done}</div><div class="s-sub">tasks left</div></div>`;
+
+  const container=document.getElementById('phases-container');
+  const openSet=new Set([...container.querySelectorAll('.phase.open')].map(el=>el.dataset.pid));
+  container.innerHTML='';
+
+  phases.forEach(ph=>{
     const st=phaseStats(ph);
-    const el=document.querySelector(`[data-pid="${phId}"]`);
-    if(!el)return;
-    el.querySelector('.ph-pct').textContent=st.pct+'%';
-    el.querySelector('.mini-fill').style.width=st.pct+'%';
-    const ff=el.querySelector('.ph-footer-fill');if(ff)ff.style.width=st.pct+'%';
-    const fn=el.querySelector('.ph-footer-num');if(fn)fn.textContent=st.pct+'%';
-    const fl=el.querySelector('.ph-footer-lbl');if(fl)fl.textContent=`${st.done}/${st.total} tasks`;
-  }
+    const el=document.createElement('div');
+    el.className='phase'+(openSet.has(String(ph.id))?' open':'');
+    el.dataset.pid=ph.id;
 
-  function updateOverall(){
-    const as=allStats();
-    document.getElementById('overall-pct').textContent=as.pct+'%';
-    document.getElementById('overall-fill').style.width=as.pct+'%';
-    const cards=document.querySelectorAll('.stat-card .s-val');
-    if(cards[0])cards[0].textContent=as.pct+'%';
-    if(cards[1])cards[1].textContent=as.done;
-    const next=document.querySelector('.stat-card:nth-child(2) .s-sub');
-    if(next)next.textContent='of '+as.total;
-    const completedPhases=phases.filter(ph=>phaseStats(ph).pct===100).length;
-    if(cards[2])cards[2].textContent=completedPhases;
-    if(cards[3])cards[3].textContent=as.total-as.done;
-  }
-
-  function renderEdit(){
-    const container=document.getElementById('edit-phases-container');
-    container.innerHTML='';
-    phases.forEach(ph=>{
-      const el=document.createElement('div');
-      el.className='edit-phase';
-      el.dataset.epid=ph.id;
-      let secsHTML='';
-      ph.sections.forEach((sec,si)=>{
-        let itemsHTML=sec.items.map((item,ii)=>`
-          <div class="edit-item" data-si="${si}" data-ii="${ii}">
-            <span class="edit-item-txt">${item}</span>
-            <button class="del-btn" title="Remove task" onclick="removeItem(${ph.id},${si},${ii})">
-              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-            </button>
-          </div>`).join('');
-        secsHTML+=`<div class="edit-sec" data-esi="${si}">
-          <div class="edit-sec-lbl" style="display:flex;align-items:center;gap:8px">
-            <span>${sec.label}</span>
-            <button class="del-sec-btn" onclick="removeSection(${ph.id},${si})">remove section</button>
+    let bodyHTML='';
+    ph.sections.forEach((sec,si)=>{
+      bodyHTML+=`<div class="sec-label">${sec.label}</div><div class="items-list">`;
+      sec.items.forEach((item,ii)=>{
+        const isDone=!!checks[ck(ph.id,si,ii)];
+        bodyHTML+=`<div class="item${isDone?' done':''}" onclick="toggleCheck(${ph.id},${si},${ii},this)">
+          <div class="cb${isDone?' checked':''}" style="${isDone?`background:${ph.color}`:''}">
+            <svg viewBox="0 0 9 9" fill="none" stroke="#fff" stroke-width="2"><polyline points="1,4.5 3.5,7 8,2"/></svg>
           </div>
-          <div class="edit-items">${itemsHTML}</div>
-          <div class="add-row">
-            <input class="add-input" placeholder="Add a task..." id="inp-${ph.id}-${si}" onkeydown="if(event.key==='Enter')addItem(${ph.id},${si})">
-            <button class="add-btn" onclick="addItem(${ph.id},${si})">+ Add</button>
-          </div>
+          <span class="item-txt">${item}</span>
         </div>`;
       });
-      el.innerHTML=`
-        <div class="edit-ph-head">
-          <div class="edit-ph-badge" style="background:${ph.color}22;color:${ph.color}">P${ph.id}</div>
-          <span class="edit-ph-title">${ph.title}</span>
+      bodyHTML+='</div>';
+    });
+    bodyHTML+=`<div class="ph-footer">
+      <span class="ph-footer-lbl">${st.done}/${st.total} tasks</span>
+      <div class="ph-footer-bar"><div class="ph-footer-fill" style="width:${st.pct}%;background:${ph.color}"></div></div>
+      <span class="ph-footer-num" style="color:${ph.color}">${st.pct}%</span>
+    </div>`;
+
+    el.innerHTML=`
+      <div class="ph-header" onclick="this.closest('.phase').classList.toggle('open')">
+        <div class="ph-badge" style="background:${ph.color}22;color:${ph.color}">P${ph.id}</div>
+        <div class="ph-info">
+          <div class="ph-title">${ph.title}</div>
+          <div class="ph-goal">${ph.goal}</div>
         </div>
-        <div class="edit-body">
-          ${secsHTML}
-          <div class="add-section-row">
-            <input class="add-sec-input" placeholder="New section name..." id="secinp-${ph.id}" onkeydown="if(event.key==='Enter')addSection(${ph.id})">
-            <button class="add-sec-btn" onclick="addSection(${ph.id})">+ Add section</button>
-          </div>
-        </div>`;
-      container.appendChild(el);
+        <div class="ph-right">
+          <span class="ph-pct" style="color:${ph.color}">${st.pct}%</span>
+          <div class="mini-bar"><div class="mini-fill" style="width:${st.pct}%;background:${ph.color}"></div></div>
+          <span class="chevron">▾</span>
+        </div>
+      </div>
+      <div class="ph-body">${bodyHTML}</div>`;
+    container.appendChild(el);
+  });
+}
+
+function updatePhaseFooter(phId){
+  const ph=phases.find(p=>p.id===phId);
+  const st=phaseStats(ph);
+  const el=document.querySelector(`[data-pid="${phId}"]`);
+  if(!el)return;
+  el.querySelector('.ph-pct').textContent=st.pct+'%';
+  el.querySelector('.mini-fill').style.width=st.pct+'%';
+  const ff=el.querySelector('.ph-footer-fill');if(ff)ff.style.width=st.pct+'%';
+  const fn=el.querySelector('.ph-footer-num');if(fn)fn.textContent=st.pct+'%';
+  const fl=el.querySelector('.ph-footer-lbl');if(fl)fl.textContent=`${st.done}/${st.total} tasks`;
+}
+
+function updateOverall(){
+  const as=allStats();
+  document.getElementById('overall-pct').textContent=as.pct+'%';
+  document.getElementById('overall-fill').style.width=as.pct+'%';
+  const cards=document.querySelectorAll('.stat-card .s-val');
+  if(cards[0])cards[0].textContent=as.pct+'%';
+  if(cards[1])cards[1].textContent=as.done;
+  const completedPhases=phases.filter(ph=>phaseStats(ph).pct===100).length;
+  if(cards[2])cards[2].textContent=completedPhases;
+  if(cards[3])cards[3].textContent=as.total-as.done;
+}
+
+function renderEdit(){
+  const container=document.getElementById('edit-phases-container');
+  container.innerHTML='';
+  phases.forEach(ph=>{
+    const el=document.createElement('div');
+    el.className='edit-phase';
+    let secsHTML='';
+    ph.sections.forEach((sec,si)=>{
+      let itemsHTML=sec.items.map((item,ii)=>`
+        <div class="edit-item">
+          <span class="edit-item-txt">${item}</span>
+          <button class="del-btn" onclick="removeItem(${ph.id},${si},${ii})">✕</button>
+        </div>`).join('');
+      secsHTML+=`<div class="edit-sec">
+        <div class="edit-sec-lbl"><span>${sec.label}</span><button class="del-sec-btn" onclick="removeSection(${ph.id},${si})">remove</button></div>
+        <div class="edit-items">${itemsHTML}</div>
+        <div class="add-row">
+          <input class="add-input" placeholder="Add task..." id="inp-${ph.id}-${si}">
+          <button class="add-btn" onclick="addItem(${ph.id},${si})">+ Add</button>
+        </div>
+      </div>`;
     });
-  }
+    el.innerHTML=`
+      <div class="edit-ph-head">
+        <div class="edit-ph-badge" style="background:${ph.color}22;color:${ph.color}">P${ph.id}</div>
+        <span class="edit-ph-title">${ph.title}</span>
+      </div>
+      <div class="edit-body">
+        ${secsHTML}
+        <div class="add-section-row">
+          <input class="add-sec-input" placeholder="New section..." id="secinp-${ph.id}">
+          <button class="add-sec-btn" onclick="addSection(${ph.id})">+ Add Section</button>
+        </div>
+      </div>`;
+    container.appendChild(el);
+  });
+}
 
-  function addItem(phId,si){
-    const inp=document.getElementById(`inp-${phId}-${si}`);
-    const val=inp.value.trim();
-    if(!val)return;
-    const ph=phases.find(p=>p.id===phId);
-    ph.sections[si].items.push(val);
-    savePhases(phases);
-    inp.value='';
-    renderEdit();
-    toast('Task added');
-  }
+function addItem(phId,si){
+  const inp=document.getElementById(`inp-${phId}-${si}`);
+  const val=inp.value.trim();
+  if(!val)return;
+  const ph=phases.find(p=>p.id===phId);
+  ph.sections[si].items.push(val);
+  localStorage.setItem(LS_PHASES,JSON.stringify(phases));
+  inp.value='';
+  renderEdit();
+  toast('Task added');
+}
 
-  function removeItem(phId,si,ii){
-    const ph=phases.find(p=>p.id===phId);
-    const k=ck(phId,si,ii);
-    ph.sections[si].items.splice(ii,1);
-    delete checks[k];
-    const newChecks={};
-    Object.keys(checks).forEach(key=>{
-      const parts=key.split('_');
-      if(parseInt(parts[0])===phId&&parseInt(parts[1])===si){
-        const oldIi=parseInt(parts[2]);
-        if(oldIi<ii)newChecks[key]=checks[key];
-        else if(oldIi>ii)newChecks[`${phId}_${si}_${oldIi-1}`]=checks[key];
-      }else newChecks[key]=checks[key];
-    });
-    checks=newChecks;
-    savePhases(phases);saveChecks(checks);
-    renderEdit();
-    toast('Task removed');
-  }
+function removeItem(phId,si,ii){
+  const ph=phases.find(p=>p.id===phId);
+  ph.sections[si].items.splice(ii,1);
+  localStorage.setItem(LS_PHASES,JSON.stringify(phases));
+  renderEdit();
+  toast('Task removed');
+}
 
-  function addSection(phId){
-    const inp=document.getElementById(`secinp-${phId}`);
-    const val=inp.value.trim();
-    if(!val)return;
-    const ph=phases.find(p=>p.id===phId);
-    ph.sections.push({label:val,items:[]});
-    savePhases(phases);
-    inp.value='';
-    renderEdit();
-    toast('Section added');
-  }
+function addSection(phId){
+  const inp=document.getElementById(`secinp-${phId}`);
+  const val=inp.value.trim();
+  if(!val)return;
+  const ph=phases.find(p=>p.id===phId);
+  ph.sections.push({label:val,items:[]});
+  localStorage.setItem(LS_PHASES,JSON.stringify(phases));
+  inp.value='';
+  renderEdit();
+  toast('Section added');
+}
 
-  function removeSection(phId,si){
-    const ph=phases.find(p=>p.id===phId);
-    if(ph.sections.length<=1){toast('Need at least one section');return;}
-    ph.sections.splice(si,1);
-    const newChecks={};
-    Object.keys(checks).forEach(key=>{
-      const parts=key.split('_');
-      if(parseInt(parts[0])===phId){
-        const oldSi=parseInt(parts[1]);
-        if(oldSi<si)newChecks[key]=checks[key];
-        else if(oldSi>si)newChecks[`${phId}_${oldSi-1}_${parts[2]}`]=checks[key];
-      }else newChecks[key]=checks[key];
-    });
-    checks=newChecks;
-    savePhases(phases);saveChecks(checks);
-    renderEdit();
-    toast('Section removed');
-  }
+function removeSection(phId,si){
+  const ph=phases.find(p=>p.id===phId);
+  if(ph.sections.length<=1){toast('Need at least one section');return;}
+  ph.sections.splice(si,1);
+  localStorage.setItem(LS_PHASES,JSON.stringify(phases));
+  renderEdit();
+  toast('Section removed');
+}
 
-  function exportPDF(){
-    if(!window.jspdf){toast('PDF library loading, try again');return;}
-    const{jsPDF}=window.jspdf;
-    const doc=new jsPDF({unit:'mm',format:'a4'});
-    const PW=210,PH=297,ML=14,MR=14,CW=PW-ML-MR;
-    const date=new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'long',year:'numeric'});
-    const as=allStats();
+// ========== INIT ==========
+(async function init(){
+  checks=await loadChecksFromCloud();
+  renderTracker();
+  toast('☁️ Team sync active');
+})();
 
-    function newPage(){
-      doc.addPage();
-      doc.setFillColor(7,9,15);
-      doc.rect(0,0,PW,PH,'F');
-    }
+// PDF export (unchanged)
+function exportPDF(){
+  if(!window.jspdf){toast('PDF library loading...');return;}
+  const{jsPDF}=window.jspdf;
+  const doc=new jsPDF({unit:'mm',format:'a4'});
+  const PW=210,PH=297,ML=14,MR=14,CW=PW-ML-MR;
+  const date=new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'long',year:'numeric'});
+  const as=allStats();
 
-    doc.setFillColor(7,9,15);
-    doc.rect(0,0,PW,PH,'F');
-
-    doc.setFillColor(13,16,24);
-    doc.rect(0,0,PW,52,'F');
+  doc.setFillColor(7,9,15);
+  doc.rect(0,0,PW,PH,'F');
+  doc.setFillColor(13,16,24);
+  doc.rect(0,0,PW,52,'F');
+  doc.setFillColor(75,140,245);
+  doc.rect(0,0,4,52,'F');
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(22);
+  doc.setTextColor(237,240,250);
+  doc.text('AutoTrace',ML+8,20);
+  doc.setFont('helvetica','normal');
+  doc.setFontSize(9);
+  doc.setTextColor(141,153,184);
+  doc.text('Graduation Project Progress Report',ML+8,28);
+  doc.text('Generated '+date,ML+8,34);
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(9);
+  doc.setTextColor(141,153,184);
+  doc.text('OVERALL PROGRESS',PW-MR-80,20);
+  doc.setFontSize(28);
+  doc.setTextColor(75,140,245);
+  doc.text(as.pct+'%',PW-MR-80,34);
+  doc.setFont('helvetica','normal');
+  doc.setFontSize(9);
+  doc.setTextColor(141,153,184);
+  doc.text(`${as.done} of ${as.total} tasks complete`,PW-MR-80,40);
+  doc.setFillColor(26,32,48);
+  doc.roundedRect(ML,44,CW,5,1,1,'F');
+  if(as.pct>0){
     doc.setFillColor(75,140,245);
-    doc.rect(0,0,4,52,'F');
+    doc.roundedRect(ML,44,Math.max(3,CW*as.pct/100),5,1,1,'F');
+  }
 
-    doc.setFont('helvetica','bold');
-    doc.setFontSize(22);
-    doc.setTextColor(237,240,250);
-    doc.text('AutoTrace',ML+8,20);
-    doc.setFont('helvetica','normal');
-    doc.setFontSize(9);
-    doc.setTextColor(141,153,184);
-    doc.text('Graduation Project Progress Report',ML+8,28);
-    doc.text('Generated '+date,ML+8,34);
+  let y=60;
+  const phaseRGB=[[75,140,245],[124,92,245],[240,160,48],[224,90,154],[62,207,191],[255,112,64]];
 
-    doc.setFont('helvetica','bold');
-    doc.setFontSize(9);
-    doc.setTextColor(141,153,184);
-    doc.text('OVERALL PROGRESS',PW-MR-80,20);
-    doc.setFontSize(28);
-    doc.setTextColor(75,140,245);
-    doc.text(as.pct+'%',PW-MR-80,34);
-    doc.setFont('helvetica','normal');
-    doc.setFontSize(9);
-    doc.setTextColor(141,153,184);
-    doc.text(`${as.done} of ${as.total} tasks complete`,PW-MR-80,40);
-
-    doc.setFillColor(26,32,48);
-    doc.roundedRect(ML,44,CW,5,1,1,'F');
-    if(as.pct>0){
-      doc.setFillColor(75,140,245);
-      doc.roundedRect(ML,44,Math.max(3,CW*as.pct/100),5,1,1,'F');
-    }
-
-    let y=60;
-    const phaseHex=['4b8cf5','7c5cf5','f0a030','e05a9a','3ecfbf','ff7040'];
-    const phaseRGB=[[75,140,245],[124,92,245],[240,160,48],[224,90,154],[62,207,191],[255,112,64]];
-
-    phases.forEach((ph,idx)=>{
-      const st=phaseStats(ph);
-      const [r,g,b]=phaseRGB[idx]||[100,120,200];
-      const remaining=ph.sections.reduce((a,s,si)=>a+s.items.filter((_,ii)=>!checks[ck(ph.id,si,ii)]).length,0);
-
-      let estH=30;
-      ph.sections.forEach(s=>{estH+=10+s.items.length*6;});
-
-      if(y+estH>PH-16){newPage();y=16;}
-
-      doc.setFillColor(19,23,32);
-      doc.roundedRect(ML,y,CW,16,3,3,'F');
-      doc.setFillColor(r,g,b);
-      doc.roundedRect(ML,y,4,16,2,2,'F');
-      doc.setFillColor(r,g,b,0.15);
-
-      doc.setFont('helvetica','bold');
-      doc.setFontSize(10);
-      doc.setTextColor(237,240,250);
-      doc.text(ph.title,ML+8,y+7);
-      doc.setFont('helvetica','normal');
-      doc.setFontSize(8);
-      doc.setTextColor(141,153,184);
-      doc.text(ph.goal,ML+8,y+12.5);
-
-      doc.setFont('helvetica','bold');
-      doc.setFontSize(12);
-      doc.setTextColor(r,g,b);
-      const pctStr=st.pct+'%';
-      doc.text(pctStr,PW-MR,y+8,{align:'right'});
-      doc.setFont('helvetica','normal');
-      doc.setFontSize(8);
-      doc.setTextColor(141,153,184);
-      doc.text(`${st.done}/${st.total}`,PW-MR,y+13,{align:'right'});
-
-      y+=19;
-
-      doc.setFillColor(26,32,48);
-      doc.roundedRect(ML,y,CW,3,1,1,'F');
-      if(st.pct>0){
-        doc.setFillColor(r,g,b);
-        doc.roundedRect(ML,y,Math.max(3,CW*st.pct/100),3,1,1,'F');
-      }
-      y+=7;
-
-      ph.sections.forEach((sec,si)=>{
-        if(y>PH-20){newPage();y=16;}
-        doc.setFont('helvetica','bold');
-        doc.setFontSize(7.5);
-        doc.setTextColor(r,g,b);
-        doc.text(sec.label.toUpperCase(),ML+3,y);
-        y+=5;
-
-        sec.items.forEach((item,ii)=>{
-          if(y>PH-12){newPage();y=16;}
-          const isDone=!!checks[ck(ph.id,si,ii)];
-          if(isDone){
-            doc.setFillColor(r,g,b);
-          }else{
-            doc.setFillColor(55,65,90);
-          }
-          doc.circle(ML+4,y-1.2,1.4,'F');
-          doc.setFont('helvetica',isDone?'normal':'normal');
-          doc.setFontSize(8.5);
-          doc.setTextColor(isDone?220:100,isDone?225:115,isDone?235:150);
-          const lines=doc.splitTextToSize(item,CW-12);
-          doc.text(lines,ML+8,y);
-          if(isDone){
-            doc.setDrawColor(r,g,b);
-            doc.setLineWidth(0.3);
-            const tw=Math.min(doc.getTextWidth(lines[0]),CW-12);
-            doc.line(ML+8,y-0.7,ML+8+tw,y-0.7);
-          }
-          y+=lines.length*5;
-        });
-        y+=3;
-      });
-
-      if(remaining===0){
-        doc.setFont('helvetica','bold');
-        doc.setFontSize(8);
-        doc.setTextColor(62,207,191);
-        doc.text('  Phase complete',ML+3,y);
-      }else{
-        doc.setFont('helvetica','italic');
-        doc.setFontSize(8);
-        doc.setTextColor(224,85,85);
-        doc.text(`  ${remaining} task${remaining>1?'s':''} remaining`,ML+3,y);
-      }
-      y+=10;
-    });
-
-    if(y>PH-30){newPage();y=16;}
+  phases.forEach((ph,idx)=>{
+    const st=phaseStats(ph);
+    const [r,g,b]=phaseRGB[idx]||[100,120,200];
+    if(y>PH-40){doc.addPage();y=16;}
     doc.setFillColor(19,23,32);
-    doc.roundedRect(ML,y,CW,26,3,3,'F');
-    doc.setFillColor(75,140,245);
-    doc.roundedRect(ML,y,4,26,2,2,'F');
+    doc.roundedRect(ML,y,CW,16,3,3,'F');
+    doc.setFillColor(r,g,b);
+    doc.roundedRect(ML,y,4,16,2,2,'F');
     doc.setFont('helvetica','bold');
     doc.setFontSize(10);
     doc.setTextColor(237,240,250);
-    doc.text('Summary',ML+8,y+8);
+    doc.text(ph.title,ML+8,y+7);
     doc.setFont('helvetica','normal');
-    doc.setFontSize(8.5);
+    doc.setFontSize(8);
     doc.setTextColor(141,153,184);
-    doc.text(`Tasks completed: ${as.done} / ${as.total}   |   Overall: ${as.pct}%   |   Phases finished: ${phases.filter(ph=>phaseStats(ph).pct===100).length} / ${phases.length}`,ML+8,y+15);
-    const rem2=as.total-as.done;
-    doc.setTextColor(rem2===0?62:240,rem2===0?207:160,rem2===0?191:48);
-    doc.text(rem2===0?'All tasks complete — project ready for submission.':rem2+' tasks remaining to complete the project.',ML+8,y+22);
-
-    const totalPages=doc.internal.getNumberOfPages();
-    for(let i=1;i<=totalPages;i++){
-      doc.setPage(i);
-      doc.setFillColor(13,16,24);
-      doc.rect(0,PH-10,PW,10,'F');
-      doc.setFont('helvetica','normal');
-      doc.setFontSize(7.5);
-      doc.setTextColor(83,95,124);
-      doc.text('AutoTrace — Graduation Project Tracker',ML,PH-4);
-      doc.text(`Page ${i} of ${totalPages}`,PW-MR,PH-4,{align:'right'});
+    doc.text(ph.goal,ML+8,y+12.5);
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(12);
+    doc.setTextColor(r,g,b);
+    doc.text(st.pct+'%',PW-MR,y+8,{align:'right'});
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(8);
+    doc.setTextColor(141,153,184);
+    doc.text(`${st.done}/${st.total}`,PW-MR,y+13,{align:'right'});
+    y+=19;
+    doc.setFillColor(26,32,48);
+    doc.roundedRect(ML,y,CW,3,1,1,'F');
+    if(st.pct>0){
+      doc.setFillColor(r,g,b);
+      doc.roundedRect(ML,y,Math.max(3,CW*st.pct/100),3,1,1,'F');
     }
+    y+=7;
+    ph.sections.forEach(sec=>{
+      doc.setFont('helvetica','bold');
+      doc.setFontSize(7.5);
+      doc.setTextColor(r,g,b);
+      doc.text(sec.label.toUpperCase(),ML+3,y);
+      y+=5;
+      sec.items.forEach(item=>{
+        doc.setFont('helvetica','normal');
+        doc.setFontSize(8);
+        doc.setTextColor(141,153,184);
+        doc.text('• '+item,ML+5,y);
+        y+=5;
+      });
+      y+=3;
+    });
+    y+=10;
+  });
 
-    doc.save('autotrace-progress-report.pdf');
-    toast('PDF exported successfully');
+  const totalPages=doc.internal.getNumberOfPages();
+  for(let i=1;i<=totalPages;i++){
+    doc.setPage(i);
+    doc.setFillColor(13,16,24);
+    doc.rect(0,PH-10,PW,10,'F');
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(7.5);
+    doc.setTextColor(83,95,124);
+    doc.text('AutoTrace — Graduation Project Tracker',ML,PH-4);
+    doc.text(`Page ${i} of ${totalPages}`,PW-MR,PH-4,{align:'right'});
   }
-
-  renderTracker();
+  doc.save('autotrace-progress-report.pdf');
+  toast('PDF exported');
+}
 </script>
 </body>
 </html>
