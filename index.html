@@ -285,19 +285,23 @@ async function loadChecksFromCloud(){
 
 async function saveCheckToCloud(phId,si,ii){
   try{
-    await fetch(SHEETS_API_URL,{
+    const response = await fetch(SHEETS_API_URL,{
       method:'POST',
       body:JSON.stringify({phase:phId,section:si,item:ii,device:deviceId})
     });
+    const result = await response.json();
+    if(!result.success) console.warn('Save may have failed:', result);
   }catch(e){console.error('Save error:',e);}
 }
 
 async function deleteCheckFromCloud(phId,si,ii){
   try{
-    await fetch(SHEETS_API_URL,{
+    const response = await fetch(SHEETS_API_URL,{
       method:'DELETE',
       body:JSON.stringify({phase:phId,section:si,item:ii})
     });
+    const result = await response.json();
+    if(!result.success) console.warn('Delete may have failed:', result);
   }catch(e){console.error('Delete error:',e);}
 }
 
