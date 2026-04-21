@@ -281,65 +281,28 @@ async function loadChecksFromCloud(){
     console.error('Cloud load error:',e);
     return {};
   }
-async function saveCheckToCloud(phId, si, ii) {
-  try {
-    console.log('Saving to cloud:', {phase: phId, section: si, item: ii});
-    const response = await fetch(SHEETS_API_URL, {
-      method: 'POST',
-      mode: 'no-cors', // Add this to avoid CORS issues
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        phase: phId,
-        section: si,
-        item: ii,
-        device: deviceId
-      })
-    });
-    console.log('Save completed');
-  } catch(e) {
-    console.error('Save error:', e);
-  }
 }
 
-async function deleteCheckFromCloud(phId, si, ii) {
-  try {
-    console.log('Deleting from cloud:', {phase: phId, section: si, item: ii});
-    const response = await fetch(SHEETS_API_URL, {
-      method: 'DELETE',
-      mode: 'no-cors', // Add this to avoid CORS issues
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        phase: phId,
-        section: si,
-        item: ii
-      })
+async function saveCheckToCloud(phId,si,ii){
+  try{
+    const response = await fetch(SHEETS_API_URL,{
+      method:'POST',
+      body:JSON.stringify({phase:phId,section:si,item:ii,device:deviceId})
     });
-    console.log('Delete completed');
-  } catch(e) {
-    console.error('Delete error:', e);
-  }
+    const result = await response.json();
+    if(!result.success) console.warn('Save may have failed:', result);
+  }catch(e){console.error('Save error:',e);}
 }
 
-async function loadChecksFromCloud() {
-  try {
-    console.log('Loading from cloud...');
-    const response = await fetch(SHEETS_API_URL);
-    const data = await response.json();
-    const newChecks = {};
-    data.forEach(row => {
-      const key = ck(row.phase, row.section, row.item);
-      newChecks[key] = true;
+async function deleteCheckFromCloud(phId,si,ii){
+  try{
+    const response = await fetch(SHEETS_API_URL,{
+      method:'DELETE',
+      body:JSON.stringify({phase:phId,section:si,item:ii})
     });
-    console.log('Loaded checks:', Object.keys(newChecks).length);
-    return newChecks;
-  } catch(e) {
-    console.error('Cloud load error:', e);
-    return {};
-  }
+    const result = await response.json();
+    if(!result.success) console.warn('Delete may have failed:', result);
+  }catch(e){console.error('Delete error:',e);}
 }
 
 async function syncNow(){
