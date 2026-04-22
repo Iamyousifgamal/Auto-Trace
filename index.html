@@ -412,14 +412,55 @@ async function loadChecksFromCloud(){
     const data=await res.json();
     const newChecks={};
     data.forEach(row=>{
-      const key=ck(row.phase,row.section,row.item);
-      newChecks[key]=true;
+      // Translate text values back to numeric ck() key
+      if(row.type==='structure'){
+        // structure rows handled separately
+        return;
+      }
+      const ph=phases.find(p=>p.title===row.phase);
+      if(!ph)return;
+      const si=ph.sections.findIndex(s=>s.label===row.section);
+      if(si<0)return;
+      const ii=ph.sections[si].items.findIndex(it=>it===row.item);
+      if(ii<0)return;
+      newChecks[ck(ph.id,si,ii)]=true;
     });
     return newChecks;
   }catch(e){
     console.error('Cloud load error:',e);
     return {};
   }
+}
+
+async function loadStructureFromCloud(){
+  try{
+    const res=await fetch(SHEETS_API_URL+'?type=structure');
+    const data=await res.json();
+    // data is array; find the latest structure row
+    const structRow=data.filter(r=>r.type==='structure').pop();
+    if(structRow && structRow.item){
+      const saved=JSON.parse(structRow.item);
+      // Merge: keep colors/ids from DEFAULT, update sections/items from cloud
+      saved.forEach((cloudPh,idx)=>{
+        const local=phases.find(p=>p.id===cloudPh.id);
+        if(local){
+          local.sections=cloudPh.sections;
+        }
+      });
+    }
+  }catch(e){
+    // silently ignore - structure stays as default/localStorage
+  }
+}
+
+async function saveStructureToCloud(){
+  try{
+    const payload=phases.map(ph=>({id:ph.id,sections:ph.sections}));
+    await fetch(SHEETS_API_URL,{
+      method:'POST',
+      body:JSON.stringify({action:'structure',item:JSON.stringify(payload),phase:'__structure__',section:'__structure__',device:deviceId})
+    });
+  }catch(e){console.error('Structure save error:',e);}
 }
 
 async function saveCheckToCloud(phId,si,ii){
@@ -454,6 +495,7 @@ async function deleteCheckFromCloud(phId,si,ii){
 
 async function syncNow(){
   toast('Syncing with team...');
+  await loadStructureFromCloud();
   checks=await loadChecksFromCloud();
   renderTracker();
   updateOverall();
@@ -709,7 +751,8 @@ function addItem(phId,si){
   localStorage.setItem(LS_PHASES,JSON.stringify(phases));
   inp.value='';
   renderEdit();
-  toast('Task added');
+  saveStructureToCloud();
+  toast('Task added — syncing...');
 }
 
 function removeItem(phId,si,ii){
@@ -717,7 +760,8 @@ function removeItem(phId,si,ii){
   ph.sections[si].items.splice(ii,1);
   localStorage.setItem(LS_PHASES,JSON.stringify(phases));
   renderEdit();
-  toast('Task removed');
+  saveStructureToCloud();
+  toast('Task removed — syncing...');
 }
 
 function addSection(phId){
@@ -729,7 +773,8 @@ function addSection(phId){
   localStorage.setItem(LS_PHASES,JSON.stringify(phases));
   inp.value='';
   renderEdit();
-  toast('Section added');
+  saveStructureToCloud();
+  toast('Section added — syncing...');
 }
 
 function removeSection(phId,si){
@@ -738,10 +783,13 @@ function removeSection(phId,si){
   ph.sections.splice(si,1);
   localStorage.setItem(LS_PHASES,JSON.stringify(phases));
   renderEdit();
-  toast('Section removed');
+  saveStructureToCloud();
+  toast('Section removed — syncing...');
 }
 
 (async function init(){
+  // Load structure first so text lookups in loadChecksFromCloud work correctly
+  await loadStructureFromCloud();
   checks=await loadChecksFromCloud();
   renderTracker();
   toast('&#x2601;&#xFE0F; Team sync active');
