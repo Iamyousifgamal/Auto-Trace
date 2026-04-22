@@ -285,9 +285,13 @@ async function loadChecksFromCloud(){
 
 async function saveCheckToCloud(phId,si,ii){
   try{
+    const ph=phases.find(p=>p.id===phId);
+    const phaseText=ph.title;
+    const sectionText=ph.sections[si].label;
+    const itemText=ph.sections[si].items[ii];
     const response = await fetch(SHEETS_API_URL,{
       method:'POST',
-      body:JSON.stringify({phase:phId,section:si,item:ii,device:deviceId})
+      body:JSON.stringify({action:'check',phase:phaseText,section:sectionText,item:itemText,device:deviceId})
     });
     const result = await response.json();
     if(!result.success) console.warn('Save may have failed:', result);
@@ -296,15 +300,18 @@ async function saveCheckToCloud(phId,si,ii){
 
 async function deleteCheckFromCloud(phId,si,ii){
   try{
+    const ph=phases.find(p=>p.id===phId);
+    const phaseText=ph.title;
+    const sectionText=ph.sections[si].label;
+    const itemText=ph.sections[si].items[ii];
     const response = await fetch(SHEETS_API_URL,{
       method:'POST',
-      body:JSON.stringify({action:'delete',phase:phId,section:si,item:ii})
+      body:JSON.stringify({action:'delete',phase:phaseText,section:sectionText,item:itemText})
     });
     const result = await response.json();
     if(!result.success) console.warn('Delete may have failed:', result);
   }catch(e){console.error('Delete error:',e);}
 }
-
 async function syncNow(){
   toast('Syncing with team...');
   checks=await loadChecksFromCloud();
