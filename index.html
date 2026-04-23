@@ -278,8 +278,8 @@ if (!deviceId) {
 
 const DEFAULT_PHASES=[
 {id:1,title:"Phase 1: Networking Foundations",goal:"CCNA Core — build strong fundamentals",color:"#4b8cf5",sections:[
-{label:"Topics to cover",items:["Network Basics (IP, Subnetting, OSI, TCP/IP)","Switching (MAC, VLANs, STP)","Routing Basics (Static and Dynamic)","NAT & ACL","DNS (Domain Name System)","DHCP (Dynamic Host Configuration Protocol)","ARP (Address Resolution Protocol)","ICMP (Internet Control Message Protocol)","Network Security Fundamentals (Firewalls, VPNs)","Wireless Networking Basics","IPv6 Fundamentals"]},
-{label:"CCNA Labs",items:["CCNA Lab 1 – Introduction (Part 1)","CCNA Lab 1 – Introduction (Part 2)","CCNA Lab 2 – Static Routing","CCNA Lab 3 – Dynamic Routing (Part 1)","CCNA Lab 3 – Dynamic Routing (Part 2)","CCNA Lab 4 – Switching","CCNA Lab 5 – NAT & ACL"]}
+{label:"Topics to cover",items:["Network Devices & OSI Model","Switching (MAC, VLANs, STP)","Routing Basics (Static and Dynamic)","NAT & ACL","DNS (Domain Name System)","DHCP (Dynamic Host Configuration Protocol)","ARP (Address Resolution Protocol)","ICMP (Internet Control Message Protocol)","Network Security Fundamentals (Firewalls, VPNs)","Wireless Networking Basics","IPv6 Fundamentals"]},
+{label:"CCNA Labs",items:["CCNA Lab 1 – Introduction (Part 1)","CCNA Lab 1 – Introduction (Part 2)","CCNA Lab 1 – Introduction (Part 3)","CCNA Lab 2 – Static Routing","CCNA Lab 3 – Dynamic Routing (Part 1)","CCNA Lab 3 – Dynamic Routing (Part 2)","CCNA Lab 4 – Switching","CCNA Lab 5 – NAT & ACL"]}
 ]},
 {id:2,title:"Phase 2: Advanced Routing",goal:"CCNP — EIGRP & OSPF mastery",color:"#7c5cf5",sections:[
 {label:"Topics to cover",items:["EIGRP","OSPF","Route Redistribution between EIGRP and OSPF","Route Summarization","Route Filtering and Prefix Lists","BGP (Border Gateway Protocol) basics","MPLS (Multiprotocol Label Switching) fundamentals","Policy-Based Routing"]},
@@ -311,8 +311,8 @@ const STUDY_PLAN = [
   {
     phaseId: 1, color: "#4b8cf5", title: "Phase 1: Networking Foundations", goal: "CCNA Core — build strong fundamentals", tasks: 18, weeks: 1,
     rows: [
-      { day:"Mon", dayNum:"Day 1",  topics:["Network Basics (IP, Subnetting, OSI, TCP/IP)"],  labs:["CCNA Lab 1 – Introduction (Part 1)"],  badge:"tl", est:"4–5 h" },
-      { day:"Tue", dayNum:"Day 2",  topics:["Switching (MAC, VLANs, STP)"],                   labs:["CCNA Lab 1 – Introduction (Part 2)"],  badge:"tl", est:"4–5 h" },
+      { day:"Mon", dayNum:"Day 1",  topics:["Network Devices & OSI Model"],  labs:["CCNA Lab 1 – Introduction (Part 1)"],  badge:"tl", est:"4–5 h" },
+      { day:"Tue", dayNum:"Day 2",  topics:["Switching (MAC, VLANs, STP)"],                   labs:["CCNA Lab 1 – Introduction (Part 2)","CCNA Lab 1 – Introduction (Part 3)"],  badge:"tl", est:"4–5 h" },
       { day:"Wed", dayNum:"Day 3",  topics:["Routing Basics (Static and Dynamic)"],            labs:["CCNA Lab 2 – Static Routing"],         badge:"tl", est:"4–5 h" },
       { day:"Thu", dayNum:"Day 4",  topics:["NAT & ACL","DNS (Domain Name System)"],           labs:["CCNA Lab 3 – Dynamic Routing (Part 1)","CCNA Lab 3 – Dynamic Routing (Part 2)"], badge:"tl", est:"5–6 h" },
       { day:"Fri", dayNum:"Day 5",  topics:["DHCP (Dynamic Host Configuration Protocol)","ARP (Address Resolution Protocol)"], labs:["CCNA Lab 4 – Switching"], badge:"tl", est:"4–5 h" },
